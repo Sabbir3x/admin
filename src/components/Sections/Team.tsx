@@ -13,8 +13,49 @@ const Team: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [useDummyData, setUseDummyData] = useState(true); // Debug flag
+
+  // Dummy data for debugging
+  const dummyTeam: TeamMember[] = [
+    {
+      id: '1',
+      name: 'Alex Johnson',
+      designation: 'Lead Developer',
+      image_url: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg',
+      bio: 'Full-stack developer with 8+ years of experience in modern web technologies.',
+      specialties: ['React', 'Node.js', 'TypeScript'],
+      social_url_a: 'https://linkedin.com/in/alexjohnson',
+      social_url_b: 'https://twitter.com/alexjohnson',
+      social_url_c: 'https://github.com/alexjohnson'
+    },
+    {
+      id: '2',
+      name: 'Sarah Chen',
+      designation: 'UI/UX Designer',
+      image_url: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg',
+      bio: 'Creative designer passionate about creating beautiful and functional user experiences.',
+      specialties: ['Figma', 'Adobe Creative Suite', 'User Research'],
+      social_url_a: 'https://linkedin.com/in/sarahchen',
+      social_url_b: 'https://dribbble.com/sarahchen'
+    },
+    {
+      id: '3',
+      name: 'David Rodriguez',
+      designation: 'Project Manager',
+      image_url: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg',
+      bio: 'Experienced project manager ensuring smooth delivery of complex projects.',
+      specialties: ['Agile', 'Scrum', 'Team Leadership'],
+      social_url_a: 'https://linkedin.com/in/davidrodriguez'
+    }
+  ];
 
   const fetchTeamMembers = async () => {
+    if (useDummyData) {
+      setTeam(dummyTeam);
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await fetch(`${API_URL}/team-members`);
@@ -114,6 +155,26 @@ const Team: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold text-gray-900">Manage Team</h3>
             <p className="text-sm text-gray-600">Add, edit, or remove team members</p>
+            <div className="mt-2">
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={useDummyData}
+                  onChange={(e) => {
+                    setUseDummyData(e.target.checked);
+                    if (!e.target.checked) {
+                      fetchTeamMembers();
+                    } else {
+                      setTeam(dummyTeam);
+                      setLoading(false);
+                      setError('');
+                    }
+                  }}
+                  className="mr-2"
+                />
+                <span className="text-sm text-blue-600">Use dummy data for debugging</span>
+              </label>
+            </div>
           </div>
           <Button
             onClick={() => setIsModalOpen(true)}

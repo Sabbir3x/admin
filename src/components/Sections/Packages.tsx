@@ -13,8 +13,46 @@ const Packages: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [useDummyData, setUseDummyData] = useState(true); // Debug flag
+
+  // Dummy data for debugging
+  const dummyPackages: PackageType[] = [
+    {
+      id: '1',
+      title: 'Starter Package',
+      description: 'Perfect for small businesses and startups',
+      price: '$1,999',
+      features: ['5 Pages', 'Responsive Design', 'Basic SEO', 'Contact Form'],
+      is_popular: false,
+      duration: '2-3 weeks'
+    },
+    {
+      id: '2',
+      title: 'Professional Package',
+      description: 'Ideal for growing businesses with advanced needs',
+      price: '$4,999',
+      features: ['10 Pages', 'Custom Design', 'Advanced SEO', 'E-commerce Ready', 'Analytics Setup'],
+      is_popular: true,
+      duration: '4-6 weeks'
+    },
+    {
+      id: '3',
+      title: 'Enterprise Package',
+      description: 'Complete solution for large organizations',
+      price: '$9,999',
+      features: ['Unlimited Pages', 'Custom Development', 'Premium Support', 'Advanced Features', 'Training Included'],
+      is_popular: false,
+      duration: '8-12 weeks'
+    }
+  ];
 
   const fetchPackages = async () => {
+    if (useDummyData) {
+      setPackages(dummyPackages);
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await fetch(`${API_URL}/packages`);
@@ -114,6 +152,26 @@ const Packages: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold text-gray-900">Manage Packages</h3>
             <p className="text-sm text-gray-600">Add, edit, or remove service packages</p>
+            <div className="mt-2">
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={useDummyData}
+                  onChange={(e) => {
+                    setUseDummyData(e.target.checked);
+                    if (!e.target.checked) {
+                      fetchPackages();
+                    } else {
+                      setPackages(dummyPackages);
+                      setLoading(false);
+                      setError('');
+                    }
+                  }}
+                  className="mr-2"
+                />
+                <span className="text-sm text-blue-600">Use dummy data for debugging</span>
+              </label>
+            </div>
           </div>
           <Button
             onClick={() => setIsModalOpen(true)}

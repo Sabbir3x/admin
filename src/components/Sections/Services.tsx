@@ -20,8 +20,46 @@ const Services: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [useDummyData, setUseDummyData] = useState(true); // Debug flag
+
+  // Dummy data for debugging
+  const dummyServices: Service[] = [
+    {
+      id: '1',
+      title: 'Web Development',
+      description: 'Custom web applications built with modern technologies',
+      icon: 'Globe',
+      price: '$2,500',
+      features: ['Responsive Design', 'SEO Optimized', 'Fast Loading'],
+      cover_image_url: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg'
+    },
+    {
+      id: '2',
+      title: 'Mobile App Development',
+      description: 'Native and cross-platform mobile applications',
+      icon: 'Smartphone',
+      price: '$3,500',
+      features: ['iOS & Android', 'Push Notifications', 'Offline Support'],
+      cover_image_url: 'https://images.pexels.com/photos/147413/twitter-facebook-together-exchange-of-information-147413.jpeg'
+    },
+    {
+      id: '3',
+      title: 'UI/UX Design',
+      description: 'Beautiful and intuitive user interface designs',
+      icon: 'Monitor',
+      price: '$1,800',
+      features: ['User Research', 'Wireframing', 'Prototyping'],
+      cover_image_url: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg'
+    }
+  ];
 
   const fetchServices = async () => {
+    if (useDummyData) {
+      setServices(dummyServices);
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await fetch(`${API_URL}/services`);
@@ -121,6 +159,26 @@ const Services: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold text-gray-900">Manage Services</h3>
             <p className="text-sm text-gray-600">Add, edit, or remove services from your website</p>
+            <div className="mt-2">
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={useDummyData}
+                  onChange={(e) => {
+                    setUseDummyData(e.target.checked);
+                    if (!e.target.checked) {
+                      fetchServices();
+                    } else {
+                      setServices(dummyServices);
+                      setLoading(false);
+                      setError('');
+                    }
+                  }}
+                  className="mr-2"
+                />
+                <span className="text-sm text-blue-600">Use dummy data for debugging</span>
+              </label>
+            </div>
           </div>
           <Button
             onClick={() => setIsModalOpen(true)}
