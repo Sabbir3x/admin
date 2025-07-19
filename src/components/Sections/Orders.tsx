@@ -15,8 +15,59 @@ const Orders: React.FC = () => {
   const [filterStatus, setFilterStatus] = useState<'all' | 'pending' | 'confirmed' | 'in-progress' | 'completed' | 'cancelled'>('all');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [useDummyData, setUseDummyData] = useState(true); // Debug flag
+
+  // Dummy data for debugging
+  const dummyOrders: Order[] = [
+    {
+      order_id: 'ORD_1704067200000_ABC123',
+      name: 'John Smith',
+      email: 'john.smith@example.com',
+      phone: '+1-555-0123',
+      company: 'Tech Solutions Inc',
+      message: 'Looking for a complete website redesign with modern features',
+      budget: '$5,000 - $10,000',
+      timeline: '2-3 months',
+      package_name: 'Premium Web Development',
+      package_price: '$7,500',
+      status: 'pending',
+      created_at: '2024-01-01T10:00:00Z'
+    },
+    {
+      order_id: 'ORD_1704153600000_DEF456',
+      name: 'Sarah Johnson',
+      email: 'sarah.j@company.com',
+      phone: '+1-555-0456',
+      company: 'Marketing Pro',
+      message: 'Need a mobile app for our business',
+      budget: '$10,000+',
+      timeline: '3-4 months',
+      package_name: 'Mobile App Development',
+      package_price: '$12,000',
+      status: 'in-progress',
+      created_at: '2024-01-02T14:30:00Z'
+    },
+    {
+      order_id: 'ORD_1704240000000_GHI789',
+      name: 'Mike Davis',
+      email: 'mike@startup.io',
+      phone: '+1-555-0789',
+      budget: '$2,000 - $5,000',
+      timeline: '1 month',
+      package_name: 'Basic Website',
+      package_price: '$3,500',
+      status: 'completed',
+      created_at: '2024-01-03T09:15:00Z'
+    }
+  ];
 
   const fetchOrders = async () => {
+    if (useDummyData) {
+      setOrders(dummyOrders);
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     const token = localStorage.getItem('access_token');
     if (!token) {
@@ -149,6 +200,26 @@ const Orders: React.FC = () => {
               {pendingCount > 0 && inProgressCount > 0 && ', '}
               {inProgressCount > 0 && `${inProgressCount} in progress`}
             </p>
+            <div className="mt-2">
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={useDummyData}
+                  onChange={(e) => {
+                    setUseDummyData(e.target.checked);
+                    if (!e.target.checked) {
+                      fetchOrders();
+                    } else {
+                      setOrders(dummyOrders);
+                      setLoading(false);
+                      setError('');
+                    }
+                  }}
+                  className="mr-2"
+                />
+                <span className="text-sm text-blue-600">Use dummy data for debugging</span>
+              </label>
+            </div>
           </div>
           <select
             className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
