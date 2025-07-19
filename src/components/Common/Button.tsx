@@ -20,45 +20,46 @@ const Button: React.FC<ButtonProps> = ({
   as = 'button',
   ...props
 }) => {
-  const getVariantClass = () => {
+  const getVariantClasses = () => {
     switch (variant) {
       case 'secondary':
-        return 'fb-btn-secondary';
+        return 'bg-gray-200 hover:bg-gray-300 text-gray-900';
       case 'danger':
-        return 'fb-btn-danger';
+        return 'bg-red-600 hover:bg-red-700 text-white';
       case 'success':
-        return 'fb-btn-success';
+        return 'bg-green-600 hover:bg-green-700 text-white';
       default:
-        return 'fb-btn';
+        return 'bg-blue-600 hover:bg-blue-700 text-white';
     }
   };
 
-  const getSizeStyle = () => {
+  const getSizeClasses = () => {
     switch (size) {
       case 'sm':
-        return { padding: '6px 12px', fontSize: '13px' };
+        return 'px-3 py-1.5 text-sm';
       case 'lg':
-        return { padding: '12px 24px', fontSize: '17px' };
+        return 'px-6 py-3 text-lg';
       default:
-        return { padding: '8px 16px', fontSize: '15px' };
+        return 'px-4 py-2 text-base';
     }
   };
 
-  const buttonClass = `${getVariantClass()} ${className}`;
-
-const buttonStyle: React.CSSProperties = {
-  ...getSizeStyle(),
-  opacity: (disabled || loading) ? 0.6 : 1,
-  cursor: (disabled || loading) ? 'not-allowed' : 'pointer',
-  pointerEvents: (disabled || loading) ? 'none' : 'auto'
-};
+  const buttonClasses = `
+    ${getVariantClasses()}
+    ${getSizeClasses()}
+    font-semibold rounded-lg transition-all duration-200 
+    inline-flex items-center justify-center gap-2 
+    shadow-sm hover:shadow-md
+    ${(disabled || loading) ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}
+    ${className}
+  `.trim().replace(/\s+/g, ' ');
 
   const content = (
     <>
       {loading ? (
-        <div className="fb-spinner" style={{ marginRight: children ? '8px' : '0' }}></div>
+        <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
       ) : Icon ? (
-        <Icon style={{ width: '16px', height: '16px', marginRight: children ? '8px' : '0' }} />
+        <Icon className="w-4 h-4" />
       ) : null}
       {children}
     </>
@@ -66,7 +67,7 @@ const buttonStyle: React.CSSProperties = {
 
   if (as === 'span') {
     return (
-      <span className={buttonClass} style={buttonStyle} {...(props as any)}>
+      <span className={buttonClasses} {...(props as any)}>
         {content}
       </span>
     );
@@ -75,8 +76,7 @@ const buttonStyle: React.CSSProperties = {
   return (
     <button
       type="button"
-      className={buttonClass}
-      style={buttonStyle}
+      className={buttonClasses}
       disabled={disabled || loading}
       {...props}
     >

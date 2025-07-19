@@ -46,26 +46,18 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => 
   };
 
   return (
-    <div className="fb-sidebar">
+    <div className="bg-white border-r border-gray-200 h-screen fixed left-0 top-0 w-70 z-50 flex flex-col">
       {/* Header */}
-      <div style={{ padding: '16px', borderBottom: '1px solid #dadde1' }}>
-        <div className="fb-flex fb-items-center fb-space-x-3">
-          <div style={{ 
-            width: '40px', 
-            height: '40px', 
-            background: '#1877f2', 
-            borderRadius: '8px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <Settings style={{ width: '20px', height: '20px', color: 'white' }} />
+      <div className="p-4 border-b border-gray-200">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+            <Settings className="w-5 h-5 text-white" />
           </div>
           <div>
-            <div style={{ fontSize: '20px', fontWeight: '700', color: '#1c1e21' }}>
+            <div className="text-xl font-bold text-gray-900">
               Minimind
             </div>
-            <div style={{ fontSize: '13px', color: '#65676b' }}>
+            <div className="text-sm text-gray-600">
               Admin Panel
             </div>
           </div>
@@ -73,16 +65,20 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => 
       </div>
       
       {/* Navigation */}
-      <nav style={{ padding: '8px 0', flex: 1 }}>
+      <nav className="py-2 flex-1">
         {menuItems.map((item) => {
           const Icon = item.icon;
           return (
             <div
               key={item.id}
               onClick={() => onSectionChange(item.id)}
-              className={`fb-sidebar-item ${activeSection === item.id ? 'active' : ''}`}
+              className={`flex items-center px-4 py-3 mx-2 rounded-lg font-medium transition-colors duration-200 cursor-pointer ${
+                activeSection === item.id 
+                  ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600' 
+                  : 'text-gray-700 hover:bg-gray-100'
+              }`}
             >
-              <Icon />
+              <Icon className="w-5 h-5 mr-3" />
               <span>{item.label}</span>
             </div>
           );
@@ -90,9 +86,9 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => 
       </nav>
       
       {/* Logout */}
-      <div style={{ padding: '8px', borderTop: '1px solid #dadde1' }}>
-        <div onClick={handleLogout} className="fb-sidebar-item" style={{ color: '#e41e3f' }}>
-          <LogOut />
+      <div className="p-2 border-t border-gray-200">
+        <div onClick={handleLogout} className="flex items-center px-4 py-3 mx-2 rounded-lg font-medium transition-colors duration-200 cursor-pointer text-red-600 hover:bg-red-50">
+          <LogOut className="w-5 h-5 mr-3" />
           <span>Logout</span>
         </div>
       </div>

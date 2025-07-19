@@ -20,73 +20,45 @@ const Header: React.FC<HeaderProps> = ({ title, onSearch }) => {
   });
 
   return (
-    <div className="fb-header">
-      <div className="fb-flex fb-items-center fb-space-x-4">
+    <div className="bg-white border-b border-gray-200 px-6 h-16 flex items-center justify-between sticky top-0 z-40">
+      <div className="flex items-center space-x-4">
         <div>
-          <h1 style={{ fontSize: '24px', fontWeight: '700', color: '#1c1e21', marginBottom: '4px' }}>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">
             {title}
           </h1>
-          <div className="fb-flex fb-items-center fb-space-x-4">
-            <div className="fb-flex fb-items-center fb-text-small fb-text-muted">
-              <Calendar style={{ width: '14px', height: '14px', marginRight: '4px' }} />
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center text-sm text-gray-500">
+              <Calendar className="w-3.5 h-3.5 mr-1" />
               {currentDate}
             </div>
-            <div className="fb-flex fb-items-center fb-text-small fb-text-muted">
-              <Clock style={{ width: '14px', height: '14px', marginRight: '4px' }} />
+            <div className="flex items-center text-sm text-gray-500">
+              <Clock className="w-3.5 h-3.5 mr-1" />
               {currentTime}
             </div>
           </div>
         </div>
       </div>
       
-      <div className="fb-flex fb-items-center fb-space-x-3">
+      <div className="flex items-center space-x-3">
         {onSearch && (
-          <div className="fb-search">
-            <Search />
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Search..." 
+              className="pl-10 pr-4 py-2 bg-gray-100 border-0 rounded-full text-sm w-64 focus:outline-none focus:bg-white focus:shadow-md focus:w-80 transition-all duration-200"
               onChange={(e) => onSearch(e.target.value)}
             />
           </div>
         )}
         
-        <button style={{
-          background: '#f0f2f5',
-          border: 'none',
-          borderRadius: '50%',
-          width: '40px',
-          height: '40px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer',
-          position: 'relative'
-        }}>
-          <Bell style={{ width: '20px', height: '20px', color: '#65676b' }} />
-          <div style={{
-            position: 'absolute',
-            top: '8px',
-            right: '8px',
-            width: '8px',
-            height: '8px',
-            background: '#e41e3f',
-            borderRadius: '50%'
-          }}></div>
+        <button className="relative bg-gray-100 hover:bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center transition-colors duration-200">
+          <Bell className="w-5 h-5 text-gray-600" />
+          <div className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></div>
         </button>
         
-        <button style={{
-          background: '#f0f2f5',
-          border: 'none',
-          borderRadius: '50%',
-          width: '40px',
-          height: '40px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer'
-        }}>
-          <User style={{ width: '20px', height: '20px', color: '#65676b' }} />
+        <button className="bg-gray-100 hover:bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center transition-colors duration-200">
+          <User className="w-5 h-5 text-gray-600" />
         </button>
       </div>
     </div>

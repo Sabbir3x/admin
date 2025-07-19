@@ -51,16 +51,10 @@ const Dashboard: React.FC = () => {
 
   if (loading) {
     return (
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        background: '#f0f2f5'
-      }}>
-        <div className="fb-card" style={{ padding: '40px', textAlign: 'center' }}>
-          <div className="fb-spinner" style={{ margin: '0 auto 16px' }}></div>
-          <p style={{ color: '#65676b' }}>Loading dashboard...</p>
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-10 text-center">
+          <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading dashboard...</p>
         </div>
       </div>
     );
@@ -110,14 +104,14 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#f0f2f5' }}>
+    <div className="flex min-h-screen bg-gray-50">
       <Sidebar
         activeSection={activeSection}
         onSectionChange={setActiveSection}
       />
-      <div style={{ flex: 1, marginLeft: '280px' }}>
+      <div className="flex-1 ml-70">
         <Header title={getSectionTitle()} />
-        <main style={{ padding: '24px' }}>
+        <main className="p-6">
           {renderSection()}
         </main>
       </div>

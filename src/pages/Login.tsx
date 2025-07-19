@@ -43,53 +43,32 @@ function LoginPage() {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      background: 'linear-gradient(135deg, #1877f2 0%, #42b883 100%)',
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif'
-    }}>
-      <div className="fb-card" style={{ 
-        padding: '40px', 
-        width: '100%', 
-        maxWidth: '400px',
-        margin: '20px'
-      }}>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 to-emerald-500">
+      <div className="bg-white rounded-xl shadow-xl p-10 w-full max-w-md mx-5">
         {/* Logo */}
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <div style={{
-            width: '64px',
-            height: '64px',
-            background: '#1877f2',
-            borderRadius: '16px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            margin: '0 auto 16px'
-          }}>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" className="w-8 h-8">
               <path d="M17 18a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2"/>
               <rect x="3" y="4" width="18" height="18" rx="2"/>
               <path d="M12 8v4"/>
               <path d="M12 12h.01"/>
             </svg>
           </div>
-          <h1 style={{ fontSize: '28px', fontWeight: '700', color: '#1c1e21', marginBottom: '8px' }}>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Welcome Back
           </h1>
-          <p style={{ color: '#65676b', fontSize: '16px' }}>
+          <p className="text-gray-600 text-lg">
             Login to access your admin dashboard
           </p>
         </div>
 
         <form onSubmit={handleLogin}>
-          <div className="fb-form-group">
-            <label className="fb-label">Email Address</label>
+          <div className="mb-6">
+            <label className="block font-semibold text-gray-900 mb-2 text-sm">Email Address</label>
             <input
               type="email"
-              className="fb-input"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -97,11 +76,11 @@ function LoginPage() {
             />
           </div>
 
-          <div className="fb-form-group">
-            <label className="fb-label">Password</label>
+          <div className="mb-6">
+            <label className="block font-semibold text-gray-900 mb-2 text-sm">Password</label>
             <input
               type="password"
-              className="fb-input"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -111,13 +90,12 @@ function LoginPage() {
 
           <button
             type="submit"
-            className="fb-btn"
-            style={{ width: '100%', marginTop: '8px' }}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md mt-2"
             disabled={loading}
           >
             {loading ? (
               <>
-                <div className="fb-spinner" style={{ marginRight: '8px' }}></div>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                 Logging in...
               </>
             ) : (
@@ -126,15 +104,11 @@ function LoginPage() {
           </button>
 
           {message && (
-            <div style={{
-              marginTop: '16px',
-              padding: '12px',
-              borderRadius: '6px',
-              background: message.includes('successful') ? '#d4edda' : '#f8d7da',
-              color: message.includes('successful') ? '#155724' : '#721c24',
-              fontSize: '14px',
-              textAlign: 'center'
-            }}>
+            <div className={`mt-4 p-3 rounded-lg text-sm text-center ${
+              message.includes('successful') 
+                ? 'bg-green-100 text-green-800' 
+                : 'bg-red-100 text-red-800'
+            }`}>
               {message}
             </div>
           )}
