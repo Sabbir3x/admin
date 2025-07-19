@@ -267,7 +267,7 @@ const HomePageManager: React.FC = () => {
 
   // --- Render --- 
   return (
-    <div className="flex-1 overflow-y-auto">
+    <div className="flex-1 overflow-y-auto" style={{ backgroundColor: '#e9edf5', padding: '20px 10px', borderRadius: '20px',}}>
       <Header title="Home Page Content" />
       <div className="p-6 space-y-8">
         
