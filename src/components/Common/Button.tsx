@@ -45,12 +45,13 @@ const Button: React.FC<ButtonProps> = ({
   };
 
   const buttonClass = `${getVariantClass()} ${className}`;
-  const buttonStyle = {
-    ...getSizeStyle(),
-    opacity: (disabled || loading) ? 0.6 : 1,
-    cursor: (disabled || loading) ? 'not-allowed' : 'pointer',
-    pointerEvents: (disabled || loading) ? 'none' : 'auto'
-  };
+
+const buttonStyle: React.CSSProperties = {
+  ...getSizeStyle(),
+  opacity: (disabled || loading) ? 0.6 : 1,
+  cursor: (disabled || loading) ? 'not-allowed' : 'pointer',
+  pointerEvents: (disabled || loading) ? 'none' : 'auto'
+};
 
   const content = (
     <>
