@@ -12,33 +12,84 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, size = 'md' }) => {
   if (!isOpen) return null;
 
-  const getSizeClasses = () => {
+  const getSizeStyles = () => {
     switch (size) {
       case 'sm':
-        return 'max-w-md';
+        return { maxWidth: '28rem' };
       case 'lg':
-        return 'max-w-4xl';
+        return { maxWidth: '56rem' };
       case 'xl':
-        return 'max-w-6xl';
+        return { maxWidth: '72rem' };
       default:
-        return 'max-w-2xl';
+        return { maxWidth: '32rem' };
     }
   };
 
+  const overlayStyles = {
+    position: 'fixed' as const,
+    inset: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 50,
+    padding: '1rem',
+  };
+
+  const modalStyles = {
+    backgroundColor: 'white',
+    borderRadius: '0.75rem',
+    boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.25)',
+    width: '100%',
+    maxHeight: '90vh',
+    overflow: 'auto',
+    ...getSizeStyles(),
+  };
+
+  const headerStyles = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '1.5rem',
+    borderBottom: '1px solid #e5e7eb',
+  };
+
+  const titleStyles = {
+    fontSize: '1.25rem',
+    fontWeight: '700',
+    color: '#111827',
+  };
+
+  const closeButtonStyles = {
+    padding: '0.5rem',
+    borderRadius: '0.5rem',
+    border: 'none',
+    backgroundColor: 'transparent',
+    cursor: 'pointer',
+    color: '#6b7280',
+    transition: 'background-color 0.2s',
+  };
+
+  const contentStyles = {
+    padding: '1.5rem',
+  };
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className={`bg-white rounded-xl shadow-xl w-full max-h-[90vh] overflow-y-auto ${getSizeClasses()}`}>
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h3 className="text-xl font-bold text-gray-900">{title}</h3>
+    <div style={overlayStyles}>
+      <div style={modalStyles}>
+        <div style={headerStyles}>
+          <h3 style={titleStyles}>{title}</h3>
           <button 
             onClick={onClose} 
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
+            style={closeButtonStyles}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f3f4f6'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
           >
-            <X className="w-5 h-5 text-gray-500" />
+            <X style={{ width: '1.25rem', height: '1.25rem' }} />
           </button>
         </div>
         
-        <div className="p-6">
+        <div style={contentStyles}>
           {children}
         </div>
       </div>

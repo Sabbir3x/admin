@@ -109,9 +109,9 @@ const Dashboard: React.FC = () => {
         activeSection={activeSection}
         onSectionChange={setActiveSection}
       />
-      <div className="flex-1 ml-70">
+      <div className="flex-1 ml-80">
         <Header title={getSectionTitle()} />
-        <main className="p-6">
+        <main className="p-6 animate-fade-in">
           {renderSection()}
         </main>
       </div>

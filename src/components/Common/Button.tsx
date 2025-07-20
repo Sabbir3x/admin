@@ -20,46 +20,72 @@ const Button: React.FC<ButtonProps> = ({
   as = 'button',
   ...props
 }) => {
-  const getVariantClasses = () => {
-    switch (variant) {
-      case 'secondary':
-        return 'bg-gray-200 hover:bg-gray-300 text-gray-900';
-      case 'danger':
-        return 'bg-red-600 hover:bg-red-700 text-white';
-      case 'success':
-        return 'bg-green-600 hover:bg-green-700 text-white';
-      default:
-        return 'bg-blue-600 hover:bg-blue-700 text-white';
-    }
+  const baseStyles = {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '0.5rem',
+    fontWeight: '600',
+    borderRadius: '0.5rem',
+    border: 'none',
+    cursor: disabled || loading ? 'not-allowed' : 'pointer',
+    transition: 'all 0.2s ease-in-out',
+    opacity: disabled || loading ? 0.6 : 1,
   };
 
-  const getSizeClasses = () => {
-    switch (size) {
-      case 'sm':
-        return 'px-3 py-1.5 text-sm';
-      case 'lg':
-        return 'px-6 py-3 text-lg';
-      default:
-        return 'px-4 py-2 text-base';
-    }
+  const variantStyles = {
+    primary: {
+      backgroundColor: '#2563eb',
+      color: 'white',
+    },
+    secondary: {
+      backgroundColor: '#e5e7eb',
+      color: '#374151',
+    },
+    danger: {
+      backgroundColor: '#dc2626',
+      color: 'white',
+    },
+    success: {
+      backgroundColor: '#16a34a',
+      color: 'white',
+    },
   };
 
-  const buttonClasses = `
-    ${getVariantClasses()}
-    ${getSizeClasses()}
-    font-semibold rounded-lg transition-all duration-200 
-    inline-flex items-center justify-center gap-2 
-    shadow-sm hover:shadow-md
-    ${(disabled || loading) ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}
-    ${className}
-  `.trim().replace(/\s+/g, ' ');
+  const sizeStyles = {
+    sm: {
+      padding: '0.375rem 0.75rem',
+      fontSize: '0.875rem',
+    },
+    md: {
+      padding: '0.5rem 1rem',
+      fontSize: '1rem',
+    },
+    lg: {
+      padding: '0.75rem 1.5rem',
+      fontSize: '1.125rem',
+    },
+  };
+
+  const combinedStyles = {
+    ...baseStyles,
+    ...variantStyles[variant],
+    ...sizeStyles[size],
+  };
 
   const content = (
     <>
       {loading ? (
-        <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+        <div style={{
+          width: '1rem',
+          height: '1rem',
+          border: '2px solid currentColor',
+          borderTop: '2px solid transparent',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite',
+        }}></div>
       ) : Icon ? (
-        <Icon className="w-4 h-4" />
+        <Icon style={{ width: '1rem', height: '1rem' }} />
       ) : null}
       {children}
     </>
@@ -67,7 +93,7 @@ const Button: React.FC<ButtonProps> = ({
 
   if (as === 'span') {
     return (
-      <span className={buttonClasses} {...(props as any)}>
+      <span style={combinedStyles} {...(props as any)}>
         {content}
       </span>
     );
@@ -76,7 +102,7 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       type="button"
-      className={buttonClasses}
+      style={combinedStyles}
       disabled={disabled || loading}
       {...props}
     >

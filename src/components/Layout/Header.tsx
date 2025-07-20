@@ -20,44 +20,44 @@ const Header: React.FC<HeaderProps> = ({ title, onSearch }) => {
   });
 
   return (
-    <div className="bg-white border-b border-gray-200 px-6 h-16 flex items-center justify-between sticky top-0 z-40">
-      <div className="flex items-center space-x-4">
+    <div className="bg-white border-b border-gray-200 px-6 h-20 flex items-center justify-between sticky top-0 z-40 shadow-soft">
+      <div className="flex items-center gap-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">
+          <h1 className="text-2xl font-bold text-gray-900 mb-1 font-heading">
             {title}
           </h1>
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center text-sm text-gray-500">
-              <Calendar className="w-3.5 h-3.5 mr-1" />
+          <div className="flex items-center gap-4">
+            <div className="flex items-center text-sm text-gray-500 gap-1">
+              <Calendar className="w-4 h-4" />
               {currentDate}
             </div>
-            <div className="flex items-center text-sm text-gray-500">
-              <Clock className="w-3.5 h-3.5 mr-1" />
+            <div className="flex items-center text-sm text-gray-500 gap-1">
+              <Clock className="w-4 h-4" />
               {currentTime}
             </div>
           </div>
         </div>
       </div>
       
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center gap-4">
         {onSearch && (
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
               placeholder="Search..." 
-              className="pl-10 pr-4 py-2 bg-gray-100 border-0 rounded-full text-sm w-64 focus:outline-none focus:bg-white focus:shadow-md focus:w-80 transition-all duration-200"
+              className="pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm w-64 focus:outline-none focus:bg-white focus:border-primary-300 focus:ring-2 focus:ring-primary-500/20 focus:w-80 transition-all duration-300"
               onChange={(e) => onSearch(e.target.value)}
             />
           </div>
         )}
         
-        <button className="relative bg-gray-100 hover:bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center transition-colors duration-200">
+        <button className="relative bg-gray-50 hover:bg-gray-100 rounded-xl w-12 h-12 flex items-center justify-center transition-all duration-200 border border-gray-200 hover:border-gray-300">
           <Bell className="w-5 h-5 text-gray-600" />
-          <div className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></div>
+          <div className="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse"></div>
         </button>
         
-        <button className="bg-gray-100 hover:bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center transition-colors duration-200">
+        <button className="bg-gray-50 hover:bg-gray-100 rounded-xl w-12 h-12 flex items-center justify-center transition-all duration-200 border border-gray-200 hover:border-gray-300">
           <User className="w-5 h-5 text-gray-600" />
         </button>
       </div>
