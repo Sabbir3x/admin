@@ -46,18 +46,18 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => 
   };
 
   return (
-    <div className="bg-white border-r border-gray-200 h-screen fixed left-0 top-0 w-80 z-50 flex flex-col shadow-medium">
+    <div className="bg-white border-r border-gray-200 h-screen fixed left-0 top-0 w-64 z-50 flex flex-col shadow-lg">
       {/* Header */}
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl flex items-center justify-center shadow-medium">
-            <Settings className="w-6 h-6 text-white" />
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-md">
+            <Settings className="w-5 h-5 text-white" />
           </div>
           <div>
-            <div className="text-xl font-bold text-gray-900 font-heading">
+            <div className="text-lg font-bold text-gray-900">
               Minimind
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-xs text-gray-500">
               Admin Panel
             </div>
           </div>
@@ -65,21 +65,21 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => 
       </div>
       
       {/* Navigation */}
-      <nav className="py-4 flex-1 px-3">
+      <nav className="py-4 flex-1 px-3 overflow-y-auto">
         {menuItems.map((item) => {
           const Icon = item.icon;
           return (
             <div
               key={item.id}
               onClick={() => onSectionChange(item.id)}
-              className={`sidebar-item cursor-pointer ${
+              className={`flex items-center gap-3 px-3 py-2.5 mb-1 rounded-lg cursor-pointer transition-all duration-200 text-sm font-medium ${
                 activeSection === item.id 
-                  ? 'sidebar-item-active' 
-                  : 'text-gray-700'
+                  ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-600' 
+                  : 'text-gray-700 hover:bg-gray-50'
               }`}
             >
-              <Icon className="w-5 h-5" />
-              <span>{item.label}</span>
+              <Icon className="w-4 h-4 flex-shrink-0" />
+              <span className="truncate">{item.label}</span>
             </div>
           );
         })}
@@ -87,8 +87,11 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => 
       
       {/* Logout */}
       <div className="p-3 border-t border-gray-200">
-        <div onClick={handleLogout} className="sidebar-item cursor-pointer text-red-600 hover:bg-red-50">
-          <LogOut className="w-5 h-5" />
+        <div 
+          onClick={handleLogout} 
+          className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-red-600 hover:bg-red-50 transition-all duration-200 text-sm font-medium"
+        >
+          <LogOut className="w-4 h-4" />
           <span>Logout</span>
         </div>
       </div>

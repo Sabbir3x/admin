@@ -52,9 +52,9 @@ const Dashboard: React.FC = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-10 text-center">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center max-w-sm w-full mx-4">
           <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading dashboard...</p>
+          <p className="text-gray-600 text-sm">Loading dashboard...</p>
         </div>
       </div>
     );
@@ -109,10 +109,12 @@ const Dashboard: React.FC = () => {
         activeSection={activeSection}
         onSectionChange={setActiveSection}
       />
-      <div className="flex-1 ml-80">
+      <div className="flex-1 ml-64">
         <Header title={getSectionTitle()} />
-        <main className="p-6 animate-fade-in">
-          {renderSection()}
+        <main className="p-6">
+          <div className="max-w-7xl mx-auto">
+            {renderSection()}
+          </div>
         </main>
       </div>
     </div>
